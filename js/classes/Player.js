@@ -1,10 +1,8 @@
 class Player extends Sprite {
-  constructor({ collisionBlocksCollection = [], imageSrc, framerate, animations, loop }) {
+  constructor({ collisionBlocksCollection = [], levelsStartingPositions, imageSrc, framerate, animations, loop }) {
     super({ imageSrc, framerate, animations, loop });
-    this.position = {
-      x: 200,
-      y: 200
-    }
+    this.levelsPositions = levelsStartingPositions;
+    this.position = this.levelsPositions[currentLevelCounter];
     this.velocity = {
       x: 0,
       y: 0
@@ -49,6 +47,7 @@ class Player extends Sprite {
   startLevelState() {
     this.preventInput = false;
     this.switchSprite('idleRight');
+    this.position = this.levelsPositions[currentLevelCounter];
   }
 
   handleInput(keys) {

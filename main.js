@@ -1,5 +1,6 @@
 'use strict';
 
+let theEnd = false;
 const canvas = document.querySelector('canvas');
 canvas.width = 1024;
 canvas.height = 576;
@@ -34,14 +35,15 @@ collisionsMapsCollection.forEach(map => {
   collisionBlocksCollection.push(arrayOfCollisions);
 });
 
-// const levelsStartingPositions = [
-//   {x: 256, y: 384 - 53},
-//   {x: 128, y: 192 - 53},
-//   {x: 768, y: 256 - 53},
-// ];
+const levelsStartingPositions = [
+  {x: 200, y: 200},
+  {x: 50, y: 200},
+  {x: 750, y: 100},
+];
 const c = canvas.getContext('2d');
 const player = new Player({
   collisionBlocksCollection,
+  levelsStartingPositions,
   imageSrc: './img/king/idle.png',
   framerate: 11,
   animations: {
@@ -120,6 +122,11 @@ const keys = {
 };
 
 (function animate() {
+  if (theEnd) {
+    window.cancelAnimationFrame(animate);
+    return;
+  }
+
   window.requestAnimationFrame(animate);
   levels[currentLevelCounter].draw();
   doors[currentLevelCounter].draw();
