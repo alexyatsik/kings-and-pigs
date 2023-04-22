@@ -34,6 +34,11 @@ collisionsMapsCollection.forEach(map => {
   collisionBlocksCollection.push(arrayOfCollisions);
 });
 
+// const levelsStartingPositions = [
+//   {x: 256, y: 384 - 53},
+//   {x: 128, y: 192 - 53},
+//   {x: 768, y: 256 - 53},
+// ];
 const c = canvas.getContext('2d');
 const player = new Player({
   collisionBlocksCollection,
@@ -84,6 +89,28 @@ const doors = [
     frameBuffer: 7,
     loop: false,
     autoplay: false
+  }),
+  new Sprite({
+    position: {
+      x: 768,
+      y: 448 - 112
+    },
+    imageSrc: './img/doorOpen.png',
+    framerate: 5,
+    frameBuffer: 7,
+    loop: false,
+    autoplay: false
+  }),
+  new Sprite({
+    position: {
+      x: 175,
+      y: 447 - 112
+    },
+    imageSrc: './img/doorOpen.png',
+    framerate: 5,
+    frameBuffer: 7,
+    loop: false,
+    autoplay: false
   })
 ];
 const keys = {
@@ -95,9 +122,7 @@ const keys = {
 (function animate() {
   window.requestAnimationFrame(animate);
   levels[currentLevelCounter].draw();
-  doors.forEach(door => {
-    door.draw();
-  });
+  doors[currentLevelCounter].draw();
   player.handleInput(keys);
   player.draw();
   player.update();

@@ -8,7 +8,7 @@ class Player extends Sprite {
     this.velocity = {
       x: 0,
       y: 0
-    }
+    };
     this.gravity = 1;
     this.collisionBlocksCollection = collisionBlocksCollection;
     this.collisionBlocks = this.collisionBlocksCollection[currentLevelCounter];

@@ -2,35 +2,33 @@ window.addEventListener('keydown', (event) => {
   if (player.preventInput)
     return;
 
-  switch(event.key) {
+  switch (event.key) {
     case 'w':
-      for (let i = 0; i < doors.length; i++) {
-        const door = doors[i];
-
-        if (
-          player.hitbox.position.x + player.hitbox.width <= door.position.x + door.width &&
-          player.hitbox.position.x >= door.position.x &&
-          player.hitbox.position.y <= door.position.y + door.height &&
-          player.hitbox.position.y + player.hitbox.height >= door.position.y
-        ) {
-          player.freeze();
-          player.switchSprite('enterDoor');
-          door.play();
-          setTimeout(() => {
-            player.startLevelState();
-            door.autoplay = false;
-            if (currentLevelCounter === 2) {
-              currentLevelCounter = 0;
-            } else {
-              currentLevelCounter++;
-            }
-          }, 2000);
-          return;
-        }
+      const door = doors[currentLevelCounter];
+      if (
+        player.hitbox.position.x + player.hitbox.width <= door.position.x + door.width &&
+        player.hitbox.position.x >= door.position.x &&
+        player.hitbox.position.y <= door.position.y + door.height &&
+        player.hitbox.position.y + player.hitbox.height >= door.position.y
+      ) {
+        player.freeze();
+        player.switchSprite('enterDoor');
+        door.play();
+        setTimeout(() => {
+          player.startLevelState();
+          door.autoplay = false;
+          door.currentFrame = 0;
+          if (currentLevelCounter === 2) {
+            currentLevelCounter = 0;
+          } else {
+            currentLevelCounter++;
+          }
+        }, 2000);
+        return;
       }
 
       if (player.velocity.y === 0)
-        player.velocity.y = -25;
+        player.velocity.y = -20;
       break;
     case 'a':
       keys.a.pressed = true;
