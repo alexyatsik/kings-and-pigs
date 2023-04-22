@@ -3,10 +3,40 @@
 const canvas = document.querySelector('canvas');
 canvas.width = 1024;
 canvas.height = 576;
-const collisionBlocks = createCollisionsFromArray(collisionsLevel1.parse2D());
+let currentLevelCounter = 0;
+const levels = [
+  new Level({
+    position: {
+      x: 0,
+      y: 0
+    },
+    imageSrc: './img/backgroundLevel1.png'
+  }),
+  new Level({
+    position: {
+      x: 0,
+      y: 0
+    },
+    imageSrc: './img/backgroundLevel2.png'
+  }),
+  new Level({
+    position: {
+      x: 0,
+      y: 0
+    },
+    imageSrc: './img/backgroundLevel3.png'
+  })
+];
+const collisionBlocksCollection = [];
+collisionsMapsCollection.forEach(map => {
+  const parsedCollisionsArray = parseArrayIntoRowArray(map, 16);
+  const arrayOfCollisions = createCollisionsFromArray(parsedCollisionsArray)
+  collisionBlocksCollection.push(arrayOfCollisions);
+});
+
 const c = canvas.getContext('2d');
 const player = new Player({
-  collisionBlocks,
+  collisionBlocksCollection,
   imageSrc: './img/king/idle.png',
   framerate: 11,
   animations: {
@@ -61,24 +91,13 @@ const keys = {
   a: { pressed: false },
   d: { pressed: false }
 };
-const backgroundLevel1 = new Sprite({
-  position: {
-    x: 0,
-    y: 0
-  },
-  imageSrc: './img/backgroundLevel1.png'
-});
 
 (function animate() {
   window.requestAnimationFrame(animate);
-  backgroundLevel1.draw();
-  // collisionBlocks.forEach(block => {
-  //   block.draw();
-  // });
+  levels[currentLevelCounter].draw();
   doors.forEach(door => {
     door.draw();
   });
-
   player.handleInput(keys);
   player.draw();
   player.update();

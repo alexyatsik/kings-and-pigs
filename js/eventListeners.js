@@ -16,6 +16,15 @@ window.addEventListener('keydown', (event) => {
           player.freeze();
           player.switchSprite('enterDoor');
           door.play();
+          setTimeout(() => {
+            player.startLevelState();
+            door.autoplay = false;
+            if (currentLevelCounter === 2) {
+              currentLevelCounter = 0;
+            } else {
+              currentLevelCounter++;
+            }
+          }, 2000);
           return;
         }
       }

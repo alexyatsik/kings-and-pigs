@@ -1,22 +1,22 @@
 class Player extends Sprite {
-  constructor({ collisionBlocks = [], imageSrc, framerate, animations, loop }) {
+  constructor({ collisionBlocksCollection = [], imageSrc, framerate, animations, loop }) {
     super({ imageSrc, framerate, animations, loop });
     this.position = {
       x: 200,
       y: 200
     }
-
     this.velocity = {
       x: 0,
       y: 0
     }
-
     this.gravity = 1;
-    this.collisionBlocks = collisionBlocks;
+    this.collisionBlocksCollection = collisionBlocksCollection;
+    this.collisionBlocks = this.collisionBlocksCollection[currentLevelCounter];
     this.preventInput = false;
   }
 
   update() {
+    this.collisionBlocks = this.collisionBlocksCollection[currentLevelCounter];
     this.position.x += this.velocity.x;
     this.#updateHitbox();
     this.#checkForHorizontalCollision();
@@ -44,6 +44,11 @@ class Player extends Sprite {
   freeze() {
     this.stop();
     this.preventInput = true;
+  }
+
+  startLevelState() {
+    this.preventInput = false;
+    this.switchSprite('idleRight');
   }
 
   handleInput(keys) {

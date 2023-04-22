@@ -1,11 +1,20 @@
-Array.prototype.parse2D = function() {
+// Array.prototype.parse2D = function() {
+//   const rows = [];
+//   for (let i = 0; i < this.length; i += 16) {
+//     rows.push(this.slice(i, i + 16));
+//   }
+//
+//   return rows;
+// };
+
+function parseArrayIntoRowArray(arr, itemsInRow) {
   const rows = [];
-  for (let i = 0; i < this.length; i += 16) {
-    rows.push(this.slice(i, i + 16));
+  for (let i = 0; i < arr.length; i += itemsInRow) {
+    rows.push(arr.slice(i, i + itemsInRow));
   }
 
   return rows;
-};
+}
 
 function createCollisionsFromArray(array) {
   const arrayOfCollisions = [];
